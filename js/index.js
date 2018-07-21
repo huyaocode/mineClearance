@@ -2,10 +2,24 @@ var mine = {
     minemap: [],
     col: 0,
     row: 0,
+    dommap: null,
+    init: function(domwarpper, row, col, mineProbability){
+        row = row || 30;    //默认30列，6行
+        col = col || 16;
+        mineProbability = mineProbability || 0.1;   //生成雷的概率默认是0.1
+
+        mine.createDom(domwarpper, row, col);   //生成dom
+
+        mine.createmines(mineProbability);      //生成二维数组
+        
+        console.log(mine.minemap)
+
+        mine.showmine(this.dommap);
+    },
+    //生成雷区地图的二维数组
     createmines: function (mineProbability) {
         col = this.col;
         row = this.row;
-        mineProbability = mineProbability || 0.2;
         map = this.minemap;
         //先生成空地图
         for (let y = 0; y < col; y++) {
@@ -32,6 +46,7 @@ var mine = {
             }
         }
     },
+    //展示出所有的雷
     showmine: function (dommap) {
         var col = this.col,
             row = this.row;
@@ -47,11 +62,13 @@ var mine = {
             }
         }
     },
+    //绑定事件
     bindEvent: function () {
         dommap.onclick = function (e) {
             console.log(e)
         }
     },
+    //创建雷区dom
     createDom: function (wrapper, row, col) {
         //创建 ul.col > li * col > ul.row > li * row的结构
         this.col = col;
@@ -61,14 +78,14 @@ var mine = {
         var colUl = document.createElement('ul');
         colUl.className = "col";
         //创建col个行
-        for (let y = 0; y < col; y++) { //y 为纵向坐标                                                  ????????????????????????????
+        for (let y = 0; y < col; y++) { //y 为纵向坐标
             //每一行都包在一个li中
             var colLi = document.createElement('li');
             colUl.appendChild(colLi);
             //创建每一行中的每一个小块的父级
             var rowUl = document.createElement('ul');
             rowUl.className = "row";
-            for (let x = 0; x < row; x++) { //x 为横向坐标                                               ??????????????????????????????        col & row 反了
+            for (let x = 0; x < row; x++) { //x 为横向坐标
                 //创建每一个块
                 var rowLi = document.createElement('li');
                 rowUl.appendChild(rowLi);
@@ -76,20 +93,13 @@ var mine = {
             colLi.appendChild(rowUl);
         }
         fragment.appendChild(colUl);
+        this.dommap = colUl;
         wrapper.innerHTML = "";
-        console.log(fragment)
         wrapper.appendChild(fragment);
     }
 }
 
 
-
 var domwarpper = document.getElementsByClassName('mines')[0];
-mine.createDom(domwarpper, 30, 16); 
 
-mine.createmines(0.1);
-console.log(mine.minemap)
-
-var dommap = domwarpper.getElementsByClassName('col')[0];
-mine.showmine(dommap);
-// mine.bindEvent();
+mine.init(domwarpper);
