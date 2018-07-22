@@ -4,17 +4,18 @@ var mine = {
     row: 0,
     dommap: null,
     init: function(domwarpper, row, col, mineProbability){
-        row = row || 30;    //默认30列，6行
-        col = col || 16;
-        mineProbability = mineProbability || 0.1;   //生成雷的概率默认是0.1
+        //默认30列，6行
+        this.col = col || 16;
+        this.row = row || 30; 
+        mineProbability = mineProbability || 0.1;   //生成雷的概率默认是0.1        
 
-        mine.createDom(domwarpper, row, col);   //生成dom
+        this.createmines(mineProbability);      //生成二维数组
+        console.log(this.minemap)
 
-        mine.createmines(mineProbability);      //生成二维数组
+        this.createDom(domwarpper);     //生成dom
+
+        this.showmine(this.dommap);     //展示地雷
         
-        console.log(mine.minemap)
-
-        mine.showmine(this.dommap);
     },
     //生成雷区地图的二维数组
     createmines: function (mineProbability) {
@@ -69,10 +70,10 @@ var mine = {
         }
     },
     //创建雷区dom
-    createDom: function (wrapper, row, col) {
+    createDom: function (wrapper) {
         //创建 ul.col > li * col > ul.row > li * row的结构
-        this.col = col;
-        this.row = row;
+        col = this.col;
+        row = this.row;
         var fragment = document.createDocumentFragment();
         //创建最大的ul.col， 包裹的所有行
         var colUl = document.createElement('ul');
