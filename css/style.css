@@ -138,7 +138,7 @@ body{
 }
 .wrapper .main .mines ul.col li{
     list-style: none;
-
+    white-space : nowrap;    
 }
 .wrapper .main .mines ul.col li ul.row li{
     display: inline-block;
@@ -149,6 +149,7 @@ body{
     border-left-color: rgb(245, 245, 245);
     border-top-color: rgb(245, 245, 245);
     position: relative;
+    /* white-space : nowrap; */
 }
 .wrapper .main .mines ul.col li ul.row li:hover{
     border: 3px solid #808080;
