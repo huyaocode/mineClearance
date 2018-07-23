@@ -4,6 +4,7 @@ var mine = {
     row: 0,
     dommap: null,
     numberStyle: [],
+    btnFace: null,
     init: function (domwarpper, row, col, mineProbability) {
         //默认30列，6行
         this.col = col || 16;
@@ -21,20 +22,43 @@ var mine = {
     //绑定事件
     bindEvent: function () {
         var self = this;
-        // var isTheFirstClick = true;
+        //点击笑脸事件
+        this.btnFace = document.getElementsByClassName('face')[0];
+
+        this.btnFace.onmouseup = function(e){
+            this.innerHTML = '<img src="./img/face_normal.bmp" alt="">';
+            self.init(domwarpper);
+        }
+        //左键点击地图块事件
         this.dommap.onclick = function (e) {
             var target = e.target;
-            // if(isTheFirstClick){
-            //     y = target.getAttribute('y'),
-            //     x = target.getAttribute('x');
-            //     if(minemap[y][x] == 10){
-                    
-            //     }
-            // }
-            
             if (target.getAttribute('class') == 'block') {
                 self.touch(target);
             }
+            stopBubble(e)
+            return false;
+        }
+        //右键点击地图块事件
+        this.dommap.oncontextmenu = function(e) {
+            var target = e.target;
+            if(target.tagName.toLowerCase() == 'img'){
+                target = target.parentElement;
+            }
+            if (target.getAttribute('class') == 'block') {
+                console.log(target.getAttribute('flagStyle'))
+                if(target.getAttribute('flagStyle') == null || target.getAttribute('flagStyle') == ""){
+                    target.setAttribute('flagStyle', 'flag');
+                    target.innerHTML = '<img src="./img/flag.bmp" alt="">';
+                } else if(target.getAttribute('flagStyle') == 'flag'){
+                    target.setAttribute('flagStyle', 'ask');
+                    target.innerHTML = '<img src="./img/ask.bmp" alt="">';
+                } else if (target.getAttribute('flagStyle') == 'ask'){
+                    target.setAttribute('flagStyle', '');
+                    target.innerHTML = "";
+                }
+            }
+            stopBubble(e);
+            return false;
         }
     },
     touch: function (target) {
@@ -59,6 +83,7 @@ var mine = {
             (x > 0 && y < col - 1) && this.touch(this.getdom(y + 1, x - 1));   //左下方
             (x < row - 1 && y < col - 1) && this.touch(this.getdom(y + 1, x + 1)); //右下方
         } else if (value == 10) {
+            this.btnFace.innerHTML = '<img src="./img/face_fail.bmp" alt="">';
             this.showmine();
         } else {
             target.setAttribute('class', 'block number');
@@ -168,3 +193,15 @@ var mine = {
 var domwarpper = document.getElementsByClassName('mines')[0];
 
 mine.init(domwarpper);
+
+/**
+ * 阻止时间冒泡
+ * @param {*} event 事件
+ */
+function stopBubble(event){
+	if(event.stopPropagation){
+		event.stopPropagation();
+	} else {
+		event.cancelBubble = true;
+	}
+}
