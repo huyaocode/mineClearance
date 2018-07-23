@@ -1,17 +1,17 @@
 var mine = {
-    minemap: [],
-    col: 0,
-    row: 0,
+    minemap: [],        //存放二维数组
+    col: 0,             //行数
+    row: 0,             //列数
     dommap: null,       //存储地图btn的dom
     btnFace: null,      //存储笑脸btn的dom
     domFlagNum: null,   //存储左边旗子的计数器dom
     domTimer: null,     //存储右边计时器的dom
-    mineProbability: 0.165, //生成雷的概率默认是0.2
+    mineProbability: 0.165, //生成雷的概率默认是0.165
     palyTime: 0,       //游戏时间
     palyTimeTimer: null,   //游戏时间定时器
     mineNums: 0,        //雷的数量
     correctFindNum : 0, //旗子与雷对应的数量
-    failed : false,
+    failed : false, //是否失败
     //定义旗子数的 get 与 set
     _flagNum: 99,
     get flagNum() {
@@ -31,7 +31,7 @@ var mine = {
         this.palyTime = 0;
         this.numberToPic(this.domTimer, 0);
         this.flagNum = 99;
-
+        this.mineProbability = 0.165;
         this.createmines();      //生成二维数组
         this.createDom(this.dommap);     //生成dom
         this.failed = false;
@@ -64,7 +64,7 @@ var mine = {
                     self.touch(target);
                 }
             }
-            stopBubble(e)
+            stopBubble(e);
             return false;
         }
         //右键点击地图块事件
@@ -80,10 +80,10 @@ var mine = {
             if (target.getAttribute('class') == 'block') {
                 var y = target.getAttribute('y'),
                     x = target.getAttribute('x');
-                if (target.getAttribute('flagStyle') == null || target.getAttribute('flagStyle') == "") {   //是空就放旗子🚩
+                if (self.flagNum > 0 && (target.getAttribute('flagStyle') == null || target.getAttribute('flagStyle') == "")) {   //是空就放旗子🚩
                     target.setAttribute('flagStyle', 'flag');
                     target.innerHTML = '<img src="./img/flag.bmp" alt="">';
-                    self.flagNum--;
+                    self.flagNum--; 
                     if(self.minemap[y][x] == 10){
                         self.correctFindNum++;
                     }
@@ -103,7 +103,6 @@ var mine = {
                     self.winGame();
                 }
             }
-            
             return false;
         }
 
@@ -270,19 +269,16 @@ var difficul = [
 		level : 'easy',
 		row : 9,
 		col : 9,
-		minenum : 10
 	},
 	{
 		level : 'common',
 		row : 18,
 		col : 14,
-		minenum : 40
 	},
 	{
         level : 'hard',
         row : 30,
 		col : 16,
-		minenum : 99
 	}
 ];
 
