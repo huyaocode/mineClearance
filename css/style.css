@@ -4,12 +4,12 @@
 }
 body{
     padding: 100px 0 0 0;
+    text-align: center;
 }
 .wrapper{
     box-shadow: 0 0 12px #000;
-    width: 770px;
-    height: 530px;
-    margin: 0 auto;
+    display: inline-block;
+    text-align: left;
     border-radius: 6px;
     padding: 10px;
 }
@@ -57,7 +57,7 @@ body{
 }
 .wrapper .menu .option ul {
     display: none;
-    margin-top: 3px;
+    margin-top: 1px;
     background-color: #fff;
 }
 .wrapper .menu .option ul li{
@@ -78,7 +78,7 @@ body{
     background-color: #c0c0c0;
     width: calc(100% - 14px);
     border: 1px solid #c0c0c0;
-    height: 460px;
+    /* height: 460px; */
     padding: 7px;
 }
 /*
@@ -120,7 +120,7 @@ body{
     position: absolute;
     font-size: 0;
 }
-.wrapper .main .state .time{
+.wrapper .main .state .timer{
     position: absolute;
     margin-top: 3px;
     right: 6px;
@@ -130,7 +130,7 @@ body{
  * 雷区
  * **********************/
 .wrapper .main .mines{
-    height: 400px;
+    /* height: 400px; */
     border: 3px solid #808080;
     border-right-color: #fff;
     border-bottom-color: #fff;
