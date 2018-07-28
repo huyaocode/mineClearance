@@ -29,6 +29,8 @@ var mine = {
             this.row = difficul.row;
         }
         this.palyTime = 0;
+        this.mineNums=0;
+        this.correctFindNum = 0;
         this.numberToPic(this.domTimer, 0);
         this.flagNum = 99;
         this.mineProbability = 0.165;
@@ -165,9 +167,10 @@ var mine = {
         for (let y = 0; y < col; y++) { //y 为纵向坐标
             for (let x = 0; x < row; x++) { //x 为横向坐标
                 //随机数范围0~1，如果随机数值大于 1-雷出现概率值，那么确定这个地方有雷，用10来表示这个点有雷
+                
                 var isMine = Math.round(Math.random() > 1 - mineProbability);
                 map[y][x] = isMine ? 10 : map[y][x];
-                if (isMine) {
+                if (isMine === 1) {
                     this.mineNums++;
                     //雷周围的数值要加一, 当不越界并且不是雷的时候，说明这个地方要将值加一
                     (y > 0) && map[y - 1][x] != 10 && map[y - 1][x]++;  //上方
