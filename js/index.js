@@ -160,7 +160,9 @@ var mine = {
         //先生成空地图
         for (let y = 0; y < col; y++) {
             map[y] = new Array(row);
-            map[y].fill(0);
+            for(let x = 0; x < row; x++){
+                map[y][x] = 0;
+            }
         }
 
         //对空地图进行随机放雷和标记周围值
@@ -260,9 +262,9 @@ var mine = {
     },
     numberToPic: function (dom, number) {
         var number = ("000" + number).slice(-3).split('');
-        dom.innerHTML = `<img src="./img/d` + number[0] + `.bmp" alt="">
-                        <img src="./img/d` + number[1] + `.bmp" alt="">
-                        <img src="./img/d` + number[2] + `.bmp" alt="">`;
+        dom.innerHTML = '<img src="./img/d' + number[0] + '.bmp" alt="">\
+                        <img src="./img/d' + number[1] + '.bmp" alt="">\
+                        <img src="./img/d' + number[2] + '.bmp" alt="">';
     }
 }
 
@@ -298,5 +300,7 @@ domDiffical.onclick = function(e){
         mine.init(difficul[e.target.value]);
     }
 }
+window.onload=function(){
+    mine.init(difficul[2]);
+}
 
-mine.init(difficul[2]);
