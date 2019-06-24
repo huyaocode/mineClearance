@@ -1,11 +1,32 @@
 import DOM from './DOM'
 import stopBubble from '../util/stopPropagation'
 import getEventCenter from '../util/EventCenter'
+import StateMachine from '../util/StateMachine'
+
+const enum RightClickState {
+  Black,
+  Flag,
+  Doubt
+}
 
 class Block extends DOM {
   private isBomb: boolean
   point: number = 0
-
+  private static RightClickState
+  private static stateMap = {
+    blank: {
+      nextState: 'flag',
+      handler: () => {}
+    },
+    flag: {
+      nextState: 'doubt',
+      handler: () => {}
+    },
+    doubt: {
+      nextState: 'black',
+      handler: () => {}
+    }
+  }
   constructor(isBomb: boolean, posX, posY) {
     super()
     this.isBomb = isBomb

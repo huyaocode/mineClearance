@@ -1,5 +1,4 @@
 import MineArea from './MineArea'
-import Block from '../Block'
 
 class MineAreaEasy extends MineArea {
   constructor() {
