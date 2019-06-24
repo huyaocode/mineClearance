@@ -1,31 +1,48 @@
 import DOM from './DOM'
 import stopBubble from '../util/stopPropagation'
+import getEventCenter from '../util/EventCenter'
 
 class Block extends DOM {
-  private isBoom: boolean
+  private isBomb: boolean
+  point: number = 0
 
-  constructor(isBoom: boolean, posX, posY) {
+  constructor(isBomb: boolean, posX, posY) {
     super()
-    this.isBoom = isBoom
+    this.isBomb = isBomb
     this.id = `block_${posX}_${posY}`
     setTimeout(() => this.bindEvent())
+    if (this.isBomb) {
+      const eventCenter = getEventCenter()
+      eventCenter.listen('bomb_exploded', this.exploade.bind(this))
+    }
+  }
+  isbomb() {
+    return this.isBomb
+  }
+  exploade(id) {
+    if (this.id === id) {
+      this.dom.innerHTML = `<img src="./img/error.bmp" alt="">`
+    } else {
+      this.dom.innerHTML = `<img src="./img/blood.bmp" alt="">`
+    }
   }
 
   getHTMLStr(): string {
     return `<li id="${this.id}" class="block"></li>`
   }
+
   bindEvent() {
-    document.getElementById(this.id).onclick = e => {
+    this.dom = document.getElementById(this.id)
+    this.dom.onclick = () => {
+      if (this.isBomb) {
+        const eventCenter = getEventCenter()
+        eventCenter.trigger('bomb_exploded', this.id)
+      }
+    }
+    this.dom.oncontextmenu = e => {
       stopBubble(e)
-      console.log(this.id)
       return false
     }
-    const _this = this
-    document.getElementById(this.id).oncontextmenu = function(event) {
-      stopBubble(event)
-      return false
-    }
-    
   }
 }
 
