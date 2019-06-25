@@ -41,12 +41,9 @@ abstract class MineArea extends DOM {
           }
           if (x > 0 && !map[y][x - 1].isbomb()) {
             map[y][x - 1].point++ //左方
-            console.log('左边')
           }
-          console.log(x, this.row - 1)
           if (x < this.row - 1 && !map[y][x + 1].isbomb()) {
             map[y][x + 1].point++ //右方
-            console.log('右边')
           }
           if (x > 0 && y > 0 && !map[y - 1][x - 1].isbomb()) {
             map[y - 1][x - 1].point++ //左上方

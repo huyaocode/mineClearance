@@ -3,33 +3,14 @@ import stopBubble from '../util/stopPropagation'
 import getEventCenter from '../util/EventCenter'
 import StateMachine from '../util/StateMachine'
 
-const enum RightClickState {
-  Black,
-  Flag,
-  Doubt
-}
-
 class Block extends DOM {
   private isBomb: boolean
   point: number = 0
-  private static RightClickState
   private x: number
   private y: number
   private hasClicked: boolean = false
-  private static stateMap = {
-    blank: {
-      nextState: 'flag',
-      handler: () => {}
-    },
-    flag: {
-      nextState: 'doubt',
-      handler: () => {}
-    },
-    doubt: {
-      nextState: 'black',
-      handler: () => {}
-    }
-  }
+  private rightClickState: StateMachine
+
   constructor(isBomb: boolean, posX, posY) {
     super()
     this.isBomb = isBomb
@@ -43,6 +24,35 @@ class Block extends DOM {
     } else {
       eventCenter.listen('blank_expand', this.showPoint.bind(this))
     }
+    this.initState()
+  }
+  initState() {
+    const eventCenter = getEventCenter()
+    this.rightClickState = new StateMachine(
+      {
+        blank: {
+          nextState: 'flag',
+          handler: () => {
+            this.dom.innerHTML = ``
+          }
+        },
+        flag: {
+          nextState: 'doubt',
+          handler: () => {
+            this.dom.innerHTML = `<img src="./img/flag.bmp" alt="">`
+            eventCenter.trigger('use_flag')
+          }
+        },
+        doubt: {
+          nextState: 'blank',
+          handler: () => {
+            this.dom.innerHTML = `<img src="./img/ask.bmp" alt="">`
+            eventCenter.trigger('unuse_flag')
+          }
+        }
+      },
+      'blank'
+    )
   }
   isbomb() {
     return this.isBomb
@@ -94,6 +104,9 @@ class Block extends DOM {
     }
     this.dom.oncontextmenu = e => {
       stopBubble(e)
+      if (!this.hasClicked) {
+        this.rightClickState.next()
+      }
       return false
     }
   }

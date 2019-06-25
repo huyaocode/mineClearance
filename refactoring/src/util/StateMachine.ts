@@ -4,7 +4,9 @@ interface StateMap {
     handler: Function
   }
 }
-
+/**
+ * 简单状态机
+ */
 class StateMachine {
   stateMap: StateMap
   curState
@@ -15,6 +17,7 @@ class StateMachine {
   next(...args) {
     this.curState = this.stateMap[this.curState].nextState
     this.stateMap[this.curState].handler()
+    return false
   }
 }
 
