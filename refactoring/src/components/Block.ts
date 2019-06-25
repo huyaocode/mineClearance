@@ -13,6 +13,9 @@ class Block extends DOM {
   private isBomb: boolean
   point: number = 0
   private static RightClickState
+  private x: number
+  private y: number
+  private hasClicked: boolean = false
   private static stateMap = {
     blank: {
       nextState: 'flag',
@@ -30,11 +33,15 @@ class Block extends DOM {
   constructor(isBomb: boolean, posX, posY) {
     super()
     this.isBomb = isBomb
+    this.x = posX
+    this.y = posY
     this.id = `block_${posX}_${posY}`
     setTimeout(() => this.bindEvent())
+    const eventCenter = getEventCenter()
     if (this.isBomb) {
-      const eventCenter = getEventCenter()
       eventCenter.listen('bomb_exploded', this.exploade.bind(this))
+    } else {
+      eventCenter.listen('blank_expand', this.showPoint.bind(this))
     }
   }
   isbomb() {
@@ -45,6 +52,29 @@ class Block extends DOM {
       this.dom.innerHTML = `<img src="./img/error.bmp" alt="">`
     } else {
       this.dom.innerHTML = `<img src="./img/blood.bmp" alt="">`
+    }
+  }
+  /**
+   * 展示点的值
+   * @param x
+   * @param y
+   */
+  showPoint(x, y) {
+    // 判断是自己或者是周围的点
+    const isAroundOrSlef =
+      (x === this.x || x === this.x + 1 || x === this.x - 1) &&
+      (y === this.y || y === this.y + 1 || y === this.y - 1)
+
+    if (isAroundOrSlef) {
+      this.dom.innerHTML = '<span class="point' + this.point + '">' + this.point + '</span>'
+      // 他也是空白点，那么需要拓展开来
+      if (this.point === 0 && !this.hasClicked) {
+        this.hasClicked = true
+        const eventCenter = getEventCenter()
+        eventCenter.trigger('blank_expand', this.x, this.y)
+      } else {
+        this.hasClicked = true
+      }
     }
   }
 
@@ -58,6 +88,8 @@ class Block extends DOM {
       if (this.isBomb) {
         const eventCenter = getEventCenter()
         eventCenter.trigger('bomb_exploded', this.id)
+      } else {
+        this.showPoint(this.x, this.y)
       }
     }
     this.dom.oncontextmenu = e => {

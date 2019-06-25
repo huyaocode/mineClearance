@@ -178,6 +178,9 @@ body{
     background-color: #ddd;
     border: 1px solid #999;
 }
+.point0{
+    color: #ddd;
+}
 .point1{
     color: blue;
 }
