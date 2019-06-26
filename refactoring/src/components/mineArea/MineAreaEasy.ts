@@ -8,6 +8,7 @@ class MineAreaEasy extends MineArea {
     this.mineProbability = 0.1
     this.createMineMap()
     this.setPoint()
+    setTimeout(() => this.bindEvent())
   }
 }
 

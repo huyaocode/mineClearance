@@ -1,16 +1,31 @@
 import DOM from '../DOM'
 import Block from '../Block'
+import getEventCenter from '../../util/EventCenter'
 
 abstract class MineArea extends DOM {
+  public mineNum: number = 0
   protected row: number
   protected col: number
   protected mineProbability: number
-
   private blockMap: Array<Array<Block>>
 
-  public mineNum: number = 0
+  public getHTMLStr(): string {
+    this.id = 'minearea'
+    let htmlStr = ''
+    htmlStr += `<div class="mines" id="minearea"> <ul class="col">`
+    for (let y = 0; y < this.col; y++) {
+      htmlStr += `<li><ul class="row">`
+      for (let x = 0; x < this.row; x++) {
+        htmlStr += this.blockMap[y][x].getHTMLStr()
+      }
+      htmlStr += `</ul> </li>`
+    }
+    htmlStr += `</ul> </div>`
+    return htmlStr
+  }
 
-  createMineMap(): void {
+  // 创建map
+  protected createMineMap(): void {
     this.blockMap = []
     //y 为纵向坐标
     for (let y = 0; y < this.col; y++) {
@@ -22,13 +37,12 @@ abstract class MineArea extends DOM {
         this.blockMap[y].push(new Block(isMine, y, x))
       }
     }
+    const eventCenter = getEventCenter()
+    eventCenter.trigger('setFlagNum', this.mineNum)
   }
 
-  getRandomByProbablity(): boolean {
-    return Math.random() > 1 - this.mineProbability
-  }
-
-  setPoint() {
+  // 设置点数
+  protected setPoint(): void {
     const map = this.blockMap
     for (let y = 0; y < this.col; y++) {
       for (let x = 0; x < this.row; x++) {
@@ -60,25 +74,19 @@ abstract class MineArea extends DOM {
         }
       }
     }
-    console.log(this.blockMap)
   }
 
-  public getHTMLStr(): string {
-    let htmlStr = ''
-    htmlStr += `
-    <div class="mines"> <ul class="col">`
-
-    for (let y = 0; y < this.col; y++) {
-      htmlStr += `<li><ul class="row">`
-
-      for (let x = 0; x < this.row; x++) {
-        htmlStr += this.blockMap[y][x].getHTMLStr()
-      }
-
-      htmlStr += `</ul> </li>`
+  // 绑定事件
+  protected bindEvent(): void {
+    this.dom = document.getElementById(this.id)
+    this.dom.onclick = () => {
+      const eventCenter = getEventCenter()
+      eventCenter.trigger('minearea_click')
     }
-    htmlStr += `</ul> </div>`
-    return htmlStr
+  }
+
+  private getRandomByProbablity(): boolean {
+    return Math.random() > 1 - this.mineProbability
   }
 }
 

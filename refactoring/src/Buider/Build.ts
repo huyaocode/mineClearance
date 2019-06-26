@@ -45,8 +45,8 @@ abstract class Build {
   public createFace(): void {
     this.mineClear.setFace(new Face())
   }
-  public createFlagCounter(): void {
-    this.mineClear.setFlagCounter(new FlagCounter())
+  public createFlagCounter(minNum): void {
+    this.mineClear.setFlagCounter(new FlagCounter(minNum))
   }
   public createTimer(): void {
     this.mineClear.setTimer(new Timer())

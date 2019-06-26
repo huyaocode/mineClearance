@@ -7,10 +7,9 @@ abstract class Director {
   construct(appId: string) {
     this.build.createDifficultyPicker()
     this.build.createFace()
-    this.build.createFlagCounter()
     this.build.createTimer()
-    this.build.createMineArea()
-
+    const mineNum = this.build.createMineArea()
+    this.build.createFlagCounter(mineNum)
     this.build.renderMineClear(appId)
   }
 }

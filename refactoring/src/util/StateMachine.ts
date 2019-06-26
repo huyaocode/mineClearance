@@ -1,6 +1,6 @@
 interface StateMap {
   [propName: string]: {
-    nextState: any
+    nextState: string
     handler: Function
   }
 }
@@ -10,7 +10,7 @@ interface StateMap {
 class StateMachine {
   stateMap: StateMap
   curState
-  constructor(stateMap: StateMap, curState) {
+  constructor(curState: string, stateMap: StateMap) {
     this.stateMap = stateMap
     this.curState = curState
   }
