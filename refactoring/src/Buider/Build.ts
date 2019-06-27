@@ -3,8 +3,9 @@ import Face from '../components/Face'
 import FlagCounter from '../components/FlagCounter'
 import Timer from '../components/Timer'
 import DifficultyPicker from '../components/DifficultyPicker'
+import MineArea from '../components/MineArea'
 
-abstract class Build {
+class Build {
   protected mineClear = new MineClear()
 
   public renderMineClear(appId: string) {
@@ -37,7 +38,11 @@ abstract class Build {
     `
   }
 
-  public abstract createMineArea(): void
+  public createMineArea(config): number {
+    const mineArea = new MineArea(config.col, config.row, config.mineProbability)
+    this.mineClear.setMineArea(mineArea)
+    return mineArea.mineNum
+  }
 
   public createDifficultyPicker(): void {
     this.mineClear.setDifficultyPickerStr(new DifficultyPicker())

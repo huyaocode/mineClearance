@@ -1,11 +1,10 @@
 import Face from './components/Face'
 import FlagCounter from './components/FlagCounter'
 import Timer from './components/Timer'
-import MineArea from './components/mineArea/MineArea'
-import DifficultyPicker from './components/DifficultyPicker';
+import MineArea from './components/MineArea'
+import DifficultyPicker from './components/DifficultyPicker'
 
 class MineClear {
-
   $el: any
 
   difficultyPicker: DifficultyPicker

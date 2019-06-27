@@ -26,6 +26,7 @@ class Timer extends DOM {
 
     const eventCenter = getEventCenter()
     eventCenter.listen('bomb_exploded', this.endTimer.bind(this))
+    eventCenter.listen('game_win', this.endTimer.bind(this))
     eventCenter.listen('minearea_click', this.startTimer.bind(this))
   }
 

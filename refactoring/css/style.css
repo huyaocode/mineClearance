@@ -101,7 +101,7 @@ body{
     width: 24px;
     padding: 2px;
     line-height: 25px;
-    margin-left: -10px;
+    margin-left: -13px;
     border: 2px solid #808080;
     border-top-color: #fff;
     border-left-color: #fff;
@@ -136,7 +136,7 @@ body{
     border-right-color: #fff;
     border-bottom-color: #fff;
     font-size: 0;
-    min-width: 200px;
+    min-width: 180px;
     min-height: 100px;
 }
 .wrapper .main .mines ul.col li{

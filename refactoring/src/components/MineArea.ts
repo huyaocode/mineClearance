@@ -1,13 +1,23 @@
-import DOM from '../DOM'
-import Block from '../Block'
-import getEventCenter from '../../util/EventCenter'
+import DOM from './DOM'
+import Block from './Block'
+import getEventCenter from '../util/EventCenter'
 
-abstract class MineArea extends DOM {
+class MineArea extends DOM {
   public mineNum: number = 0
   protected row: number
   protected col: number
   protected mineProbability: number
   private blockMap: Array<Array<Block>>
+
+  constructor(col, row, mineProbability) {
+    super()
+    this.col = col
+    this.row = row
+    this.mineProbability = mineProbability
+    this.createMineMap()
+    this.setPoint()
+    setTimeout(() => this.bindEvent())
+  }
 
   public getHTMLStr(): string {
     this.id = 'minearea'

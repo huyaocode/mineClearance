@@ -1,10 +1,13 @@
 import Director from './Director'
-import BuildGeneral from '../Buider/BuildGeneral'
 
 class DirectorGeneral extends Director {
   constructor() {
     super()
-    this.build = new BuildGeneral()
+    this.config = {
+      col: 10,
+      row: 15,
+      mineProbability: 0.15
+    }
   }
 }
 

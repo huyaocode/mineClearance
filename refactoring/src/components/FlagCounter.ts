@@ -4,11 +4,12 @@ import getNumberHTMLStr from '../util/getNumberHTMLStr'
 
 class FlagCounter extends DOM {
   private flagNum: number = 0
-
+  private mineNum: number = 0
+  private correctFind: number = 0
   constructor(mineNum) {
     super()
     this.id = 'flagcounter'
-    this.flagNum = mineNum
+    this.flagNum = this.mineNum = mineNum
     setTimeout(() => {
       this.bindEvent()
     })
@@ -37,6 +38,14 @@ class FlagCounter extends DOM {
     })
 
     eventCenter.listen('flag_use', this.useFlag.bind(this))
+
+    eventCenter.listen('correct_find', () => {
+      this.correctFind++
+    })
+
+    eventCenter.listen('error_find', () => {
+      this.correctFind--
+    })
   }
 
   private useFlag(x, y) {
@@ -46,6 +55,11 @@ class FlagCounter extends DOM {
       alert('旗子用完了')
       eventCenter.trigger('flag_empty', x, y)
       return
+    } else if (this.flagNum == 0) {
+      eventCenter.trigger('game_win')
+      setTimeout(() => {
+        alert('胜利！')
+      })
     }
     this.dom.innerHTML = getNumberHTMLStr(this.flagNum)
   }

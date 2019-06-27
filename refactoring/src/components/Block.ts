@@ -65,6 +65,9 @@ class Block extends DOM {
         nextState: 'doubt',
         handler: () => {
           this.dom.innerHTML = `<img src="./img/flag.bmp" alt="">`
+          if (this.isBomb) {
+            eventCenter.trigger('correct_find')
+          }
           eventCenter.trigger('flag_use', this.x, this.y)
         }
       },
@@ -72,6 +75,10 @@ class Block extends DOM {
         nextState: 'blank',
         handler: () => {
           this.dom.innerHTML = `<img src="./img/ask.bmp" alt="">`
+
+          if (this.isBomb) {
+            eventCenter.trigger('error_find')
+          }
           eventCenter.trigger('flag_unuse')
         }
       }
