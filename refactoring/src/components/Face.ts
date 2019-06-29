@@ -1,7 +1,6 @@
 import DOM from './DOM'
 import getEventCenter from '../util/EventCenter'
-import DirectorEasy from '../director/DirectorEasy'
-import bindDom from './decorator/bindDom'
+import classFactory from '../ClassFactory'
 
 const faceImg = {
   smile: `<img src="./img/face_normal.bmp" alt="">`,
@@ -42,8 +41,14 @@ class Face extends DOM {
    * 使用反射，重新构建APP
    */
   reStartGame(): void {
-    const director = new DirectorEasy()
-    director.construct('app')
+    try {
+      const eventCenter = getEventCenter()
+      eventCenter.clearAll()
+      const director = classFactory(`Director${window['difficulty']}`)
+      director.construct('app')
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 export default Face

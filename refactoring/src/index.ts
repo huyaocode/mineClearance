@@ -1,7 +1,18 @@
-import Director from "./director/Director";
-import DirectorEasy from "./director/DirectorEasy";
+import classFactory from './ClassFactory'
 
-let director: Director = null
+const initDifficulty = 'Easy'
 
-director = new DirectorEasy()
-director.construct('app')
+try {
+  window['difficulty'] = initDifficulty
+  const director = classFactory(`Director${initDifficulty}`)
+  director.construct('app')
+} catch (e) {
+  console.error(e)
+}
+
+/**
+ * TODO
+ *
+ * 当旗子用完自动变成 '?'
+ * 展示难度
+ */

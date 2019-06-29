@@ -75,7 +75,6 @@ class Block extends DOM {
         nextState: 'blank',
         handler: () => {
           this.dom.innerHTML = `<img src="./img/ask.bmp" alt="">`
-
           if (this.isBomb) {
             eventCenter.trigger('error_find')
           }

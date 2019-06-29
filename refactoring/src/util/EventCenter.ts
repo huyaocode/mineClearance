@@ -45,6 +45,11 @@ class EventCenter {
       }
     }
   }
+
+  // 清空缓存
+  clearAll() {
+    this.clientList = {}
+  }
 }
 
 // 返回单例

@@ -1,7 +1,7 @@
 import Build from '../Buider/Build'
 import MineAreaConfig from './IMineAreaConfig'
 
-abstract class Director {
+class Director {
   protected build: Build
   protected config: MineAreaConfig
 
@@ -10,7 +10,6 @@ abstract class Director {
   }
 
   construct(appId: string) {
-    console.log('this.build', this.build)
     this.build.createDifficultyPicker()
     this.build.createFace()
     this.build.createTimer()

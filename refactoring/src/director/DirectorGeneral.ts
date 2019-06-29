@@ -1,14 +1,14 @@
 import Director from './Director'
 
-class DirectorGeneral extends Director {
+class DirectoGeneral extends Director {
   constructor() {
     super()
     this.config = {
       col: 10,
       row: 15,
-      mineProbability: 0.15
+      mineProbability: 0.12
     }
   }
 }
 
-export default DirectorGeneral
+export default DirectoGeneral

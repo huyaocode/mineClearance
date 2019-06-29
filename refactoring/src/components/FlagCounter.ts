@@ -52,14 +52,15 @@ class FlagCounter extends DOM {
     const eventCenter = getEventCenter()
     this.flagNum--
     if (this.flagNum < 0) {
-      alert('旗子用完了')
       eventCenter.trigger('flag_empty', x, y)
       return
     } else if (this.flagNum == 0) {
-      eventCenter.trigger('game_win')
-      setTimeout(() => {
-        alert('胜利！')
-      })
+      if (this.correctFind === this.mineNum) {
+        eventCenter.trigger('game_win')
+        setTimeout(function() {
+          alert('游戏胜利！')
+        }, 4)
+      }
     }
     this.dom.innerHTML = getNumberHTMLStr(this.flagNum)
   }
