@@ -1,13 +1,10 @@
 import Director from './Director'
+import config from '../config'
 
 class DirectorEasy extends Director {
   constructor() {
     super()
-    this.config = {
-      col: 6,
-      row: 8,
-      mineProbability: 0.1
-    }
+    this.config = config.easy
   }
 }
 

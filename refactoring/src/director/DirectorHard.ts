@@ -1,13 +1,10 @@
 import Director from './Director'
+import config from '../config'
 
 class DirectoHard extends Director {
   constructor() {
     super()
-    this.config = {
-      col: 16,
-      row: 30,
-      mineProbability: 0.15
-    }
+    this.config = config.hard
   }
 }
 

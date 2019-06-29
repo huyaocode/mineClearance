@@ -48,6 +48,7 @@ class MineArea extends DOM {
       }
     }
     const eventCenter = getEventCenter()
+    window['mineNum'] = this.mineNum
     eventCenter.trigger('setFlagNum', this.mineNum)
   }
 

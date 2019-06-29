@@ -5,6 +5,7 @@ import Timer from '../components/Timer'
 import DifficultyPicker from '../components/DifficultyPicker'
 import MineArea from '../components/MineArea'
 import RankList from '../components/RackList'
+import AddRank from '../components/AddRank'
 
 class Build {
   protected mineClear = new MineClear()
@@ -60,6 +61,9 @@ class Build {
   }
   public createRackList(): void {
     this.mineClear.setRankList(new RankList())
+  }
+  public createAddRank(): void {
+    this.mineClear.setAddRank(new AddRank())
   }
 }
 

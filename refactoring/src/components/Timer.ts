@@ -44,6 +44,7 @@ class Timer extends DOM {
 
   private secondAdd(): void {
     this.second++
+    window['palyTime'] = this.second
     this.dom.innerHTML = getNumberHTMLStr(this.second)
   }
 }
