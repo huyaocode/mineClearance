@@ -15,6 +15,8 @@ class Director {
     this.build.createTimer()
     const mineNum = this.build.createMineArea(this.config)
     this.build.createFlagCounter(mineNum)
+    this.build.createRackList()
+    // 渲染
     this.build.renderMineClear(appId)
   }
 }

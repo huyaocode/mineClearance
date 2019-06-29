@@ -3,6 +3,7 @@ import FlagCounter from './components/FlagCounter'
 import Timer from './components/Timer'
 import MineArea from './components/MineArea'
 import DifficultyPicker from './components/DifficultyPicker'
+import RankList from './components/RackList'
 
 class MineClear {
   $el: any
@@ -12,6 +13,7 @@ class MineClear {
   timer: Timer
   flagCounter: FlagCounter
   mineArea: MineArea
+  rankList: RankList
 
   setDifficultyPickerStr(difficultyPicker: DifficultyPicker) {
     this.difficultyPicker = difficultyPicker
@@ -46,6 +48,13 @@ class MineClear {
   }
   getMineAreaStr(): string {
     return this.mineArea.getHTMLStr()
+  }
+
+  setRankList(rankList: RankList): void {
+    this.rankList = rankList
+  }
+  getRankList(): string {
+    return this.rankList.getHTMLStr()
   }
 }
 

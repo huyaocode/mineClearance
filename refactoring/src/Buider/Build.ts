@@ -4,6 +4,7 @@ import FlagCounter from '../components/FlagCounter'
 import Timer from '../components/Timer'
 import DifficultyPicker from '../components/DifficultyPicker'
 import MineArea from '../components/MineArea'
+import RankList from '../components/RackList'
 
 class Build {
   protected mineClear = new MineClear()
@@ -23,6 +24,7 @@ class Build {
       </div>
       <div class="menu">
         ${this.mineClear.getDifficultyPickerStr()}
+        ${this.mineClear.getRankList()}
       </div>
       <div class="main">
           <!-- 状态栏 -->
@@ -55,6 +57,9 @@ class Build {
   }
   public createTimer(): void {
     this.mineClear.setTimer(new Timer())
+  }
+  public createRackList(): void {
+    this.mineClear.setRankList(new RankList())
   }
 }
 
