@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <title>扫雷</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
     <div class="wrapper">
         <div class="head">
@@ -16,12 +18,37 @@
         </div>
         <div class="menu">
             <div class="option">
-                <span>难度</span>
+                <span>难度：</span>
+                <span id="difficulty"></span>
                 <ul class="difficul">
-                    <li><label><input name="Fruit" type="radio" value="0" /><span></span>初级 </label></li>
-                    <li><label><input name="Fruit" type="radio" value="1" /><span></span>中级 </label></li>
-                    <li><label><input name="Fruit" type="radio" value="2" checked/><span></span>高级 </label></li>
+                    <li>
+                        <label>
+                            <input name="Fruit" type="radio" value="0" />
+                            <span>
+                                简单
+                            </span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input name="Fruit" type="radio" value="1" checked />
+                            <span>
+                                普通
+                            </span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input name="Fruit" type="radio" value="2" />
+                            <span>
+                                困难
+                            </span>
+                        </label>
+                    </li>
                 </ul>
+            </div>
+            <div class="option" id="rank">
+                排行榜
             </div>
         </div>
         <div class="main">
@@ -48,4 +75,5 @@
     </div>
     <script src="./js/index.js"></script>
 </body>
+
 </html>

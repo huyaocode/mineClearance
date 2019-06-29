@@ -1,79 +1,91 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     padding: 100px 0 0 0;
     text-align: center;
 }
-.wrapper{
+
+.wrapper {
     box-shadow: 0 0 12px #000;
     display: inline-block;
     text-align: left;
     border-radius: 6px;
     padding: 10px;
 }
+
 /*
  * 头部
  ******************************/
-.wrapper .head{
+.wrapper .head {
     line-height: 0px;
 }
-.wrapper .head img{
+
+.wrapper .head img {
     height: 21px;
-    vertical-align:middle;
-    display:inline-block;
+    vertical-align: middle;
+    display: inline-block;
 }
-.wrapper .head h1{
-    vertical-align:middle;
-    display:inline-block;
+
+.wrapper .head h1 {
+    vertical-align: middle;
+    display: inline-block;
     font-size: 17px;
     font-weight: 400;
 }
+
 /*
  * 菜单
  ******************************/
-.wrapper .menu{
+.wrapper .menu {
     margin-top: 8px;
     margin-bottom: 2px;
     width: 100%;
     height: 24px;
     border: 1px solid #eee;
-    background: linear-gradient(to bottom, #fff, rgba(0,0,250, 0.1) 50%, #fff);
+    background: linear-gradient(to bottom, #fff, rgba(0, 0, 250, 0.1) 50%, #fff);
 }
-.wrapper .menu .option{
+
+.wrapper .menu .option {
     display: inline-block;
     margin: 0 4px;
     padding: 0 5px;
     cursor: pointer;
-    border: 1px solid #eee;
+    border: 1px solid #aaa;
     border-radius: 3px;
     color: #666;
 }
-.wrapper .menu .option:hover ul{
+
+.wrapper .menu .option:hover ul {
     display: block;
     position: absolute;
     z-index: 100;
 }
+
 .wrapper .menu .option ul {
     display: none;
     margin-top: 1px;
     background-color: #fff;
 }
-.wrapper .menu .option ul li{
+
+.wrapper .menu .option ul li {
     list-style: none;
     border: 1px solid #eee;
     width: 80px;
     height: 20px;
     padding: 0 0 0 8px;
-    margin: -1px 0 0 0 ;
+    margin: -1px 0 0 0;
 
 }
-.wrapper .menu .option ul li label span{
+
+.wrapper .menu .option ul li label span {
     margin: 0 5px;
     background-color: #fff;
     width: 1px;
 }
+
 .wrapper .main {
     background-color: #c0c0c0;
     width: calc(100% - 14px);
@@ -81,10 +93,11 @@ body{
     /* height: 460px; */
     padding: 7px;
 }
+
 /*
  * 状态栏
  **********************************/
-.wrapper .main .state{
+.wrapper .main .state {
     border: 2px solid #808080;
     border-right-color: #fff;
     border-bottom-color: #fff;
@@ -94,7 +107,7 @@ body{
     margin: 2px 0 5px;
 }
 
-.wrapper .main .state .face{
+.wrapper .main .state .face {
     position: absolute;
     left: 50%;
     height: 24px;
@@ -106,41 +119,49 @@ body{
     border-top-color: #fff;
     border-left-color: #fff;
 }
-.wrapper .main .state .face:active{
+
+.wrapper .main .state .face:active {
     border: 2px solid #808080;
     border-bottom-color: #fff;
     border-right-color: #fff;
 }
-.wrapper .main .state .face img{
+
+.wrapper .main .state .face img {
     width: 100%;
     height: 100%;
 }
-.wrapper .main .state .flagsNum{
+
+.wrapper .main .state .flagsNum {
     margin-top: 3px;
     position: absolute;
     font-size: 0;
 }
-.wrapper .main .state .timer{
+
+.wrapper .main .state .timer {
     position: absolute;
     margin-top: 3px;
     right: 6px;
     font-size: 0;
 }
+
 /*
  * 雷区
  * **********************/
-.wrapper .main .mines{
+.wrapper .main .mines {
     /* height: 400px; */
     border: 3px solid #808080;
     border-right-color: #fff;
     border-bottom-color: #fff;
     font-size: 0;
+    min-width: 200px;
 }
-.wrapper .main .mines ul.col li{
+
+.wrapper .main .mines ul.col li {
     list-style: none;
-    white-space : nowrap;    
+    white-space: nowrap;
 }
-.wrapper .main .mines ul.col li ul.row li{
+
+.wrapper .main .mines ul.col li ul.row li {
     display: inline-block;
     height: 20px;
     width: 20px;
@@ -151,18 +172,21 @@ body{
     position: relative;
     /* white-space : nowrap; */
 }
-.wrapper .main .mines ul.col li ul.row li:hover{
+
+.wrapper .main .mines ul.col li ul.row li:hover {
     border: 3px solid #808080;
     border-right-color: rgb(245, 245, 245);
     border-bottom-color: rgb(245, 245, 245);
 }
-.wrapper .main .mines ul.col li ul.row li img{
+
+.wrapper .main .mines ul.col li ul.row li img {
     position: absolute;
     top: -3px;
     left: -3px;
 }
+
 /*数字*/
-.wrapper .main .mines ul.col li ul.row li span{
+.wrapper .main .mines ul.col li ul.row li span {
     position: absolute;
     top: -3px;
     left: -3px;
@@ -176,27 +200,78 @@ body{
     background-color: #ddd;
     border: 1px solid #999;
 }
-.point1{
+
+.point1 {
     color: blue;
 }
-.point2{
+
+.point2 {
     color: rgb(64, 216, 109);
 }
-.point3{
+
+.point3 {
     color: orangered;
 }
-.point4{
+
+.point4 {
     color: darkblue;
 }
-.point5{
+
+.point5 {
     color: darkred;
 }
-.point6{
+
+.point6 {
     color: darkorchid;
 }
-.point7{
+
+.point7 {
     color: darkcyan;
 }
-.point8{
+
+.point8 {
     color: darkslategray;
+}
+
+/**
+ * 排名
+ */
+.rank {
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+    color: #222;
+    background: #efefef;
+    padding-top: 20px;
+}
+
+.rank h2 {
+    padding: 10px;
+}
+
+#playername {
+    padding: 5px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+#submit {
+    padding: 3px 30px;
+    border-radius: 5px;
+    outline: none;
+    margin: 15px;
+    font-size: 16px;
+}
+
+.rank {
+    text-align: center;
+}
+
+.rank table {
+    margin: 0 auto;
+}
+
+.rank table td,
+th {
+    width: 150px;
 }
