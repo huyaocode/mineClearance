@@ -4,8 +4,8 @@ class DirectoHard extends Director {
   constructor() {
     super()
     this.config = {
-      col: 15,
-      row: 20,
+      col: 16,
+      row: 30,
       mineProbability: 0.15
     }
   }

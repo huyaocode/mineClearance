@@ -4,8 +4,8 @@ class DirectoGeneral extends Director {
   constructor() {
     super()
     this.config = {
-      col: 10,
-      row: 15,
+      row: 18,
+      col: 14,
       mineProbability: 0.12
     }
   }
