@@ -4,6 +4,8 @@
 
 扫雷游戏体验网址： [https://huyaocode.github.io/mineClearance/](https://huyaocode.github.io/mineClearance/)
 
+这是TypeDoc工具生成的文档 [TypeDoc文档](https://huyaocode.github.io/mineClearance/docs/index.html)
+
 项目实现的功能有：
 
  - 基础的扫雷功能
