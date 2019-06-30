@@ -922,10 +922,4 @@ try {
 catch (e) {
     console.error(e);
 }
-/**
- * TODO
- *
- * 当旗子用完自动变成 '?'
- * 展示难度
- */
 //# sourceMappingURL=refactory-mineclear.es5.js.map
