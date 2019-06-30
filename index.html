@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,71 +8,9 @@
     <title>扫雷</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
-
 <body>
-    <div class="wrapper">
-        <div class="head">
-            <img src="./img/mine.ico" alt="">
-            <h1>扫雷</h1>
-        </div>
-        <div class="menu">
-            <div class="option">
-                <span>难度：</span>
-                <span id="difficulty"></span>
-                <ul class="difficul">
-                    <li>
-                        <label>
-                            <input name="Fruit" type="radio" value="0" />
-                            <span>
-                                简单
-                            </span>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input name="Fruit" type="radio" value="1" checked />
-                            <span>
-                                普通
-                            </span>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input name="Fruit" type="radio" value="2" />
-                            <span>
-                                困难
-                            </span>
-                        </label>
-                    </li>
-                </ul>
-            </div>
-            <div class="option" id="rank">
-                排行榜
-            </div>
-        </div>
-        <div class="main">
-            <!-- 状态栏 -->
-            <div class="state">
-                <div class="flagsNum">
-                    <img src="./img/d0.bmp" alt="">
-                    <img src="./img/d9.bmp" alt="">
-                    <img src="./img/d9.bmp" alt="">
-                </div>
-                <div class="face">
-                    <img src="./img/face_normal.bmp" alt="">
-                </div>
-                <div class="timer">
-                    <img src="./img/d0.bmp" alt="">
-                    <img src="./img/d0.bmp" alt="">
-                    <img src="./img/d0.bmp" alt="">
-                </div>
-            </div>
-            <!-- 雷区 -->
-            <div class="mines">
-            </div>
-        </div>
+    <div id="app">
     </div>
-    <script src="./js/index.js"></script>
+    <script src="./dist/refactory-mineclear.es5.js"></script>
 </body>
-
 </html>

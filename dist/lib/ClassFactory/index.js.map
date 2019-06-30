@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/ClassFactory/index.ts"],"names":[],"mappings":";;AAAA,uCAAiC;AAEjC,mBAAe,UAAC,SAAiB;IAC/B,IAAI,SAAS,IAAI,kBAAQ,EAAE;QACzB,OAAO,IAAI,kBAAQ,CAAC,SAAS,CAAC,EAAE,CAAA;KACjC;SAAM;QACL,MAAM,SAAS,CAAC,iBAAiB,GAAG,SAAS,CAAC,CAAA;KAC/C;AACH,CAAC,EAAA"}
