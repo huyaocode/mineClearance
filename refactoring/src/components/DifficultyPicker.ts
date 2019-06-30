@@ -1,6 +1,7 @@
 import DOM from './DOM'
 import classFactory from '../ClassFactory'
 import getEventCenter from '../util/EventCenter'
+import config from '../config'
 
 class DifficultyPicker extends DOM {
   difficultyMap = {
@@ -18,9 +19,10 @@ class DifficultyPicker extends DOM {
 
   private bindEvent(): any {
     this.dom = document.getElementById(this.id)
-    document.getElementById(this.id).onclick = e => {
-      if ((<any>e.target).value != undefined) {
-        this.reStartGame((<any>e.target).value)
+    this.dom.onclick = e => {
+      const value = (<any>e.target).value
+      if (value != undefined && value != 0) {
+        this.reStartGame(value)
       }
     }
   }

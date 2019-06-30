@@ -57,9 +57,6 @@ class FlagCounter extends DOM {
     } else if (this.flagNum == 0) {
       if (this.correctFind === this.mineNum) {
         eventCenter.trigger('game_win')
-        // setTimeout(function() {
-        //   alert('游戏胜利！')
-        // }, 4)
       }
     }
     this.dom.innerHTML = getNumberHTMLStr(this.flagNum)

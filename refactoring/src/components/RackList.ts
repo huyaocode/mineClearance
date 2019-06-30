@@ -1,6 +1,7 @@
 import DOM from './DOM'
 import getEventCenter from '../util/EventCenter'
 import config from '../config'
+import log from '../util/log'
 
 class RankList extends DOM {
   areaHeight: number
@@ -42,6 +43,7 @@ class RankList extends DOM {
     return rankList
   }
 
+  @log('rank')
   showRankList() {
     const rankList = this.getRackList()
     const areaDom = document.getElementById('minearea')
@@ -52,15 +54,16 @@ class RankList extends DOM {
           <th>姓名</th>
           <th>耗時</th>
         </tr>
-        <tr>
     `
     for (var i = 0; i < rankList.length; i++) {
       ranklistStr += `
-        <td>${rankList[i].name}</td> 
-        <td>${rankList[i].time}</td>
+        <tr>
+          <td>${rankList[i].name}</td> 
+          <td>${rankList[i].time}</td>
+        </tr>
       `
     }
-    ranklistStr + '</tr></table>'
+    ranklistStr + '</table>'
 
     areaDom.innerHTML = `<div class="rank" 
         style="width: ${config[window['difficulty'].toLowerCase()].row *

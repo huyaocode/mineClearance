@@ -5,7 +5,7 @@ import Timer from '../components/Timer'
 import DifficultyPicker from '../components/DifficultyPicker'
 import MineArea from '../components/MineArea'
 import RankList from '../components/RackList'
-import AddRank from '../components/AddRank'
+import AddRank from '../components/GameWin'
 
 class Build {
   protected mineClear = new MineClear()

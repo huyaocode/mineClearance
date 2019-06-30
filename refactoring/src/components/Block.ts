@@ -2,6 +2,7 @@ import DOM from './DOM'
 import stopBubble from '../util/stopPropagation'
 import getEventCenter from '../util/EventCenter'
 import StateMachine from '../util/StateMachine'
+import log from '../util/log'
 
 class Block extends DOM {
   public point: number = 0
@@ -85,6 +86,7 @@ class Block extends DOM {
   }
 
   // 雷爆炸
+  @log('fail')
   private exploade(id): void {
     this.hasClicked = true
     if (this.id === id) {

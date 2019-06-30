@@ -4,7 +4,7 @@ import Timer from './components/Timer'
 import MineArea from './components/MineArea'
 import DifficultyPicker from './components/DifficultyPicker'
 import RankList from './components/RackList'
-import AddRank from './components/AddRank'
+import AddRank from './components/GameWin'
 
 class MineClear {
   $el: any

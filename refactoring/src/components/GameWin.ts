@@ -1,6 +1,7 @@
 import DOM from './DOM'
 import getEventCenter from '../util/EventCenter'
 import config from '../config'
+import log from '../util/log'
 
 class AddRank extends DOM {
   areaHeight: number
@@ -25,7 +26,7 @@ class AddRank extends DOM {
     this.dom = document.getElementById(this.id)
     const eventCenter = getEventCenter()
     eventCenter.listen('game_win', () => {
-      this.showAddRank()
+      this.gameWin()
     })
   }
 
@@ -38,33 +39,43 @@ class AddRank extends DOM {
     return rankList
   }
 
-  showAddRank() {
+  @log('win')
+  gameWin() {
     let rankList = this.getRackList()
-    const areaDom = document.getElementById('minearea')
-    const curConfig = config[window['difficulty'].toLowerCase()]
     // 少于10人或超过10人但超过最后一名
     if (
       rankList.length < this.rankLen ||
       (rankList.length >= this.rankLen && window['palyTime'] < rankList[this.rankLen - 1].time)
     ) {
-      areaDom.innerHTML = `<div class="rank" style="width: ${curConfig.row *
-        config.blockWidth}px; min-height: ${curConfig.col * config.blockHeight - 20}px"> 
-            模式：${curConfig.name} <br>
-            扫雷数：${window['mineNum']}<br>
-            耗时：${window['palyTime']}秒<br>
-            请留下大名<br>
-            <input type="text" id="playername" name="playername">
-            <br>
-            <button id="submit">提交</button>
-          </div>
-        `
-      document.getElementById('submit').onclick = () => {
-        this.pushToRankList(rankList)
-        const eventCenter = getEventCenter()
-        eventCenter.trigger('showRankList')
-      }
+      this.AddToRank(rankList)
     } else {
       alert('游戏胜利')
+    }
+  }
+
+  /**
+   * 写入前十排行榜
+   * @param rankList
+   */
+  AddToRank(rankList) {
+    const areaDom = document.getElementById('minearea')
+    const curConfig = config[window['difficulty'].toLowerCase()]
+
+    areaDom.innerHTML = `<div class="rank" style="width: ${curConfig.row *
+      config.blockWidth}px; min-height: ${curConfig.col * config.blockHeight - 20}px"> 
+          模式：${curConfig.name} <br>
+          扫雷数：${window['mineNum']}<br>
+          耗时：${window['palyTime']}秒<br>
+          请留下大名<br>
+          <input type="text" id="playername" name="playername">
+          <br>
+          <button id="submit">提交</button>
+        </div>
+      `
+    document.getElementById('submit').onclick = () => {
+      this.pushToRankList(rankList)
+      const eventCenter = getEventCenter()
+      eventCenter.trigger('showRankList')
     }
   }
 
@@ -78,7 +89,6 @@ class AddRank extends DOM {
       return <any>a.time - <any>b.time
     })
     rankList = rankList.slice(0, 10)
-    console.log(rankList)
     localStorage.setItem('rank' + window['difficulty'], JSON.stringify(rankList))
   }
 }

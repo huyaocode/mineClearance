@@ -50,10 +50,10 @@ var mine = {
 
   //函数入口
   init: function (difficul) {
+    log('start')
     if (!difficul) {
       return;
     }
-    console.log(difficul)
     this.col = difficul.col
     this.row = difficul.row
     this.difficulName = difficul.name
@@ -115,7 +115,6 @@ var mine = {
     //右键点击地图块事件
     this.domMap.oncontextmenu = function (e) {
 
-      stopBubble(e)
       if (self.failed) {
         return false
       }
@@ -186,11 +185,6 @@ var mine = {
       }
       self.showRankList(rankList);
     }
-  },
-
-  //记录日志
-  log(type) {
-    console.log(type + ' ' + getCurentTime())
   },
 
   //将这个格子代表的值给展示出来
@@ -339,13 +333,13 @@ var mine = {
     }
     fragment.appendChild(colUl)
     this.domMap = colUl //绑定dom
-    console.log('wrapper', wrapper)
     wrapper.innerHTML = ''
     wrapper.appendChild(fragment)
   },
 
   //展示出所有的雷
   failGame: function (boomY, boomX) {
+    log('fail')
     this.failed = true
     var domMap = this.domMap
     var col = this.col,
@@ -396,6 +390,7 @@ var mine = {
 
   // 记录名字
   winGame: function () {
+    log('win')
     var rankLen = 10;
     var rankStr = localStorage.getItem('rank_' + curDifficulty);
 
@@ -436,6 +431,7 @@ var mine = {
 
   // 展示排行榜
   showRankList: function (rankList) {
+    log('rank')
     var ranklistStr = '\
       <table border="1" cellspacing="0">\
         <tr>\
@@ -503,9 +499,14 @@ mine.domRank = document.getElementById('rank')
 
 var domDiffical = document.getElementsByClassName('difficul')[0]
 
+//记录日志
+function log(type) {
+  console.log(type + '  ' + getCurentTime())
+}
+
+
 domDiffical.onclick = function (e) {
   var value = e.target.value
-
   if (value != undefined) {
     curDifficulty = value
     mine.init(difficul[value])

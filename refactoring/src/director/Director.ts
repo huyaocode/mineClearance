@@ -1,5 +1,6 @@
 import Build from '../Buider/Build'
 import MineAreaConfig from './IMineAreaConfig'
+import log from '../util/log'
 
 class Director {
   protected build: Build
@@ -9,6 +10,7 @@ class Director {
     this.build = new Build()
   }
 
+  @log('start')
   construct(appId: string) {
     this.build.createDifficultyPicker()
     this.build.createFace()
