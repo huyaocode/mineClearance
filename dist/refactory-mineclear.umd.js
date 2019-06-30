@@ -816,14 +816,6 @@
         function Build() {
             this.mineClear = new MineClear();
         }
-        Build.prototype.renderMineClear = function (appId) {
-            var appDom = document.getElementById(appId);
-            var str = this.getMineClearStr();
-            appDom.innerHTML = str;
-        };
-        Build.prototype.getMineClearStr = function () {
-            return "\n    <div class=\"wrapper\">\n      <div class=\"head\">\n          <img src=\"./img/mine.ico\" alt=\"\">\n          <h1>\u626B\u96F7</h1>\n      </div>\n      <div class=\"menu\">\n        " + this.mineClear.getDifficultyPickerStr() + "\n        " + this.mineClear.getRankList() + "\n      </div>\n      <div class=\"main\">\n          <!-- \u72B6\u6001\u680F -->\n          <div class=\"state\">\n              " + this.mineClear.getFlagCounterStr() + "\n              " + this.mineClear.getFaceStr() + "\n              " + this.mineClear.getTimerStr() + "\n          </div>\n          <!-- \u96F7\u533A -->\n          " + this.mineClear.getMineAreaStr() + "\n      </div>\n  </div>\n    ";
-        };
         Build.prototype.createMineArea = function (config) {
             var mineArea = new MineArea(config.col, config.row, config.mineProbability);
             this.mineClear.setMineArea(mineArea);
@@ -863,7 +855,16 @@
             this.build.createRackList();
             this.build.createAddRank();
             // 渲染
-            this.build.renderMineClear(appId);
+            this.renderMineClear(appId);
+        };
+        Director.prototype.renderMineClear = function (appId) {
+            var appDom = document.getElementById(appId);
+            var str = this.getMineClearStr();
+            appDom.innerHTML = str;
+        };
+        Director.prototype.getMineClearStr = function () {
+            var mineClear = this.build.mineClear;
+            return "\n      <div class=\"wrapper\">\n        <div class=\"head\">\n            <img src=\"./img/mine.ico\" alt=\"\">\n            <h1>\u626B\u96F7</h1>\n        </div>\n        <div class=\"menu\">\n          " + mineClear.getDifficultyPickerStr() + "\n          " + mineClear.getRankList() + "\n        </div>\n        <div class=\"main\">\n            <!-- \u72B6\u6001\u680F -->\n            <div class=\"state\">\n                " + mineClear.getFlagCounterStr() + "\n                " + mineClear.getFaceStr() + "\n                " + mineClear.getTimerStr() + "\n            </div>\n            <!-- \u96F7\u533A -->\n            " + mineClear.getMineAreaStr() + "\n        </div>\n    </div>\n    ";
         };
         __decorate([
             log('start'),

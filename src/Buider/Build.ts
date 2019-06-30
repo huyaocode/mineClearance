@@ -8,38 +8,7 @@ import RankList from '../components/RackList'
 import AddRank from '../components/GameWin'
 
 class Build {
-  protected mineClear = new MineClear()
-
-  public renderMineClear(appId: string) {
-    const appDom: any = document.getElementById(appId)
-    const str = this.getMineClearStr()
-    appDom.innerHTML = str
-  }
-
-  getMineClearStr(): string {
-    return `
-    <div class="wrapper">
-      <div class="head">
-          <img src="./img/mine.ico" alt="">
-          <h1>扫雷</h1>
-      </div>
-      <div class="menu">
-        ${this.mineClear.getDifficultyPickerStr()}
-        ${this.mineClear.getRankList()}
-      </div>
-      <div class="main">
-          <!-- 状态栏 -->
-          <div class="state">
-              ${this.mineClear.getFlagCounterStr()}
-              ${this.mineClear.getFaceStr()}
-              ${this.mineClear.getTimerStr()}
-          </div>
-          <!-- 雷区 -->
-          ${this.mineClear.getMineAreaStr()}
-      </div>
-  </div>
-    `
-  }
+  public mineClear = new MineClear()
 
   public createMineArea(config): number {
     const mineArea = new MineArea(config.col, config.row, config.mineProbability)

@@ -1,9 +1,11 @@
 import classMap from './classMap'
 
-export default (className: string) => {
+function classFactory(className: string) {
   if (className in classMap) {
     return new classMap[className]()
   } else {
     throw TypeError('no this class: ' + className)
   }
 }
+
+export default classFactory

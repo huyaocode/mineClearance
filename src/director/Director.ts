@@ -20,7 +20,39 @@ class Director {
     this.build.createRackList()
     this.build.createAddRank()
     // 渲染
-    this.build.renderMineClear(appId)
+    this.renderMineClear(appId)
+  }
+
+  renderMineClear(appId: string) {
+    const appDom: any = document.getElementById(appId)
+    const str = this.getMineClearStr()
+    appDom.innerHTML = str
+  }
+
+  getMineClearStr() {
+    const mineClear = this.build.mineClear
+    return `
+      <div class="wrapper">
+        <div class="head">
+            <img src="./img/mine.ico" alt="">
+            <h1>扫雷</h1>
+        </div>
+        <div class="menu">
+          ${mineClear.getDifficultyPickerStr()}
+          ${mineClear.getRankList()}
+        </div>
+        <div class="main">
+            <!-- 状态栏 -->
+            <div class="state">
+                ${mineClear.getFlagCounterStr()}
+                ${mineClear.getFaceStr()}
+                ${mineClear.getTimerStr()}
+            </div>
+            <!-- 雷区 -->
+            ${mineClear.getMineAreaStr()}
+        </div>
+    </div>
+    `
   }
 }
 

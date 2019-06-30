@@ -989,14 +989,73 @@ img { max-width: 100%; }
 <div class="container container-main">
 	<div class="content-wrap">
 		<div class="tsd-panel tsd-typography">
-			<h1 id="-">重构扫雷</h1>
-			<h3 id="-">待加需求</h3>
+			<h1 id="-">扫雷</h1>
+			<p>扫雷是一款经典的游戏，本项目使用<code>TypeScript</code>开发，配合一些设计模式，尽可能让项目变的结构清晰利于拓展。</p>
+			<p>用到设计模式有以下几个</p>
 			<ul>
-				<li>当一个地方已经点击了，再点的时候去让他周围 8 个点的样式变化</li>
-				<li>排行榜</li>
+				<li>发布-订阅模式<ul>
+						<li>实现事件的发布与接收</li>
+					</ul>
+				</li>
+				<li>状态模式<ul>
+						<li>右键点击格子时，旗子，问号，空白的切换 </li>
+					</ul>
+				</li>
+				<li>单例模式<ul>
+						<li>保证仅有一个事件中心</li>
+					</ul>
+				</li>
+				<li>装饰器模式<ul>
+						<li>写日志</li>
+					</ul>
+				</li>
+				<li>工厂模式<ul>
+						<li>生成一些类</li>
+					</ul>
+				</li>
+				<li>建造者模式<ul>
+						<li>搭了个架子，利于拓展</li>
+					</ul>
+				</li>
 			</ul>
-			<h2 id="-">设计</h2>
-			<h3 id="-">格子</h3>
+			<p>此外，还用到了反射技术，即根据字符串来生成一个类</p>
+			<h2 id="-">设计模式应用</h2>
+			<h3 id="-">发布-订阅模式</h3>
+			<p>在项目中有很多地方用到了事件，项目中封装了一个事件中心，他独立于业务之外，让每一个对象都可以去发布与订阅。</p>
+			<pre><code class="language-ts"><span class="hljs-keyword">class</span> EventCenter {
+
+  <span class="hljs-comment">// 存储事件于其回调函数</span>
+  clientList: {
+    [propName: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">Function</span>&gt;
+  } = {}
+  <span class="hljs-comment">// 监听事件，为事件名添加回调函数</span>
+  listen(eventName: <span class="hljs-built_in">string</span>, callback: <span class="hljs-built_in">Function</span>): <span class="hljs-built_in">void</span> {
+  }
+  <span class="hljs-comment">// 触发某事件，调用其所有的回调函数</span>
+  trigger(eventName, ...args): <span class="hljs-built_in">boolean</span> {
+  }
+  <span class="hljs-comment">// 为某个事件移除一个监听对象</span>
+  remove(eventName: <span class="hljs-built_in">string</span>, callback: <span class="hljs-built_in">Function</span>): <span class="hljs-built_in">void</span> {
+  }
+  <span class="hljs-comment">// 清空缓存</span>
+  clearAll() {
+  }
+}</code></pre>
+			<p>应用场景</p>
+			<ul>
+				<li>雷的爆炸<ul>
+						<li>当一个雷被引爆时会通知所有雷爆炸。</li>
+					</ul>
+				</li>
+				<li>游戏胜利<ul>
+						<li>当所有的雷被找到后，提示用户游戏胜利并加入到排行榜中实例对象会收到通知</li>
+					</ul>
+				</li>
+				<li>积分器开始计时</li>
+				<li>旗子数量的增减</li>
+			</ul>
+			<p>使用方法
+			获取到事件中心实例后进行<code>trigger</code>和<code>listen</code></p>
 			<p>属性：</p>
 			<ul>
 				<li>状态<ul>
@@ -1111,7 +1170,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">get<wbr>Single<wbr>Event<wbr>Center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> =&nbsp;(function() {let eventCenterreturn function() {if (!eventCenter) {eventCenter &#x3D; new EventCenter()}return eventCenter}})()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/util/EventCenter.ts#L56">util/EventCenter.ts:56</a></li>
+						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/EventCenter.ts#L56">util/EventCenter.ts:56</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1121,7 +1180,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">init<wbr>Difficulty<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Easy"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Easy&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/index.ts#L3">index.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/index.ts#L3">index.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1138,7 +1197,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/util/log.ts#L1">util/log.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/log.ts#L1">util/log.ts:1</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1169,7 +1228,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/util/getCurentTime.ts#L1">util/getCurentTime.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/getCurentTime.ts#L1">util/getCurentTime.ts:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -1186,7 +1245,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/util/getNumberHTMLStr.ts#L1">util/getNumberHTMLStr.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/getNumberHTMLStr.ts#L1">util/getNumberHTMLStr.ts:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1208,7 +1267,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">face<wbr>Img<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/components/Face.ts#L5">components/Face.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/components/Face.ts#L5">components/Face.ts:5</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -1217,7 +1276,7 @@ img { max-width: 100%; }
 					<div class="tsd-signature tsd-kind-icon">cry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;&lt;img src&#x3D;&quot;./img/face_fail.bmp&quot; alt&#x3D;&quot;&quot;&gt;&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/components/Face.ts#L7">components/Face.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/components/Face.ts#L7">components/Face.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1227,7 +1286,7 @@ img { max-width: 100%; }
 					<div class="tsd-signature tsd-kind-icon">smile<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;&lt;img src&#x3D;&quot;./img/face_normal.bmp&quot; alt&#x3D;&quot;&quot;&gt;&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7719f0e/src/components/Face.ts#L6">components/Face.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/components/Face.ts#L6">components/Face.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
