@@ -973,6 +973,9 @@ img { max-width: 100%; }
 			<a href="globals.html#initdifficulty" class="tsd-kind-icon">init<wbr>Difficulty</a>
 		</li>
 		<li class=" tsd-kind-function">
+			<a href="globals.html#classfactory" class="tsd-kind-icon">class<wbr>Factory</a>
+		</li>
+		<li class=" tsd-kind-function">
 			<a href="globals.html#default" class="tsd-kind-icon">default</a>
 		</li>
 		<li class=" tsd-kind-function">
@@ -991,118 +994,219 @@ img { max-width: 100%; }
 		<div class="tsd-panel tsd-typography">
 			<h1 id="-">扫雷</h1>
 			<p>扫雷是一款经典的游戏，本项目使用<code>TypeScript</code>开发，配合一些设计模式，尽可能让项目变的结构清晰利于拓展。</p>
-			<p>用到设计模式有以下几个</p>
+			<p>扫雷游戏体验网址： <a href="https://huyaocode.github.io/mineClearance/">https://huyaocode.github.io/mineClearance/</a></p>
+			<p>项目实现的功能有：</p>
 			<ul>
-				<li>发布-订阅模式<ul>
+				<li>基础的扫雷功能</li>
+				<li>难度选择</li>
+				<li>排行榜</li>
+			</ul>
+			<p><img src="重构前/demo.gif" alt=""></p>
+			<p>用到设计模式有以下几个：</p>
+			<ul>
+				<li><p>观察者（发布-订阅）模式</p>
+					<ul>
 						<li>实现事件的发布与接收</li>
 					</ul>
 				</li>
-				<li>状态模式<ul>
-						<li>右键点击格子时，旗子，问号，空白的切换 </li>
-					</ul>
-				</li>
-				<li>单例模式<ul>
+				<li><p>单例模式</p>
+					<ul>
 						<li>保证仅有一个事件中心</li>
 					</ul>
 				</li>
-				<li>装饰器模式<ul>
-						<li>写日志</li>
-					</ul>
-				</li>
-				<li>工厂模式<ul>
-						<li>生成一些类</li>
-					</ul>
-				</li>
-				<li>建造者模式<ul>
+				<li><p>建造者模式</p>
+					<ul>
 						<li>搭了个架子，利于拓展</li>
 					</ul>
 				</li>
+				<li><p>状态模式</p>
+					<ul>
+						<li>右键点击格子时，旗子，问号，空白的切换 </li>
+					</ul>
+				</li>
+				<li><p>装饰器模式</p>
+					<ul>
+						<li>写日志</li>
+					</ul>
+				</li>
+				<li><p>工厂模式</p>
+					<ul>
+						<li>生成一些类</li>
+					</ul>
+				</li>
 			</ul>
-			<p>此外，还用到了反射技术，即根据字符串来生成一个类</p>
+			<p>此外，还在选择不同难度处用到了反射技术，即根据字符串来生成一个类。</p>
 			<h2 id="-">设计模式应用</h2>
 			<h3 id="-">发布-订阅模式</h3>
-			<p>在项目中有很多地方用到了事件，项目中封装了一个事件中心，他独立于业务之外，让每一个对象都可以去发布与订阅。</p>
-			<pre><code class="language-ts"><span class="hljs-keyword">class</span> EventCenter {
-
-  <span class="hljs-comment">// 存储事件于其回调函数</span>
-  clientList: {
-    [propName: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">Function</span>&gt;
-  } = {}
-  <span class="hljs-comment">// 监听事件，为事件名添加回调函数</span>
-  listen(eventName: <span class="hljs-built_in">string</span>, callback: <span class="hljs-built_in">Function</span>): <span class="hljs-built_in">void</span> {
-  }
-  <span class="hljs-comment">// 触发某事件，调用其所有的回调函数</span>
-  trigger(eventName, ...args): <span class="hljs-built_in">boolean</span> {
-  }
-  <span class="hljs-comment">// 为某个事件移除一个监听对象</span>
-  remove(eventName: <span class="hljs-built_in">string</span>, callback: <span class="hljs-built_in">Function</span>): <span class="hljs-built_in">void</span> {
-  }
-  <span class="hljs-comment">// 清空缓存</span>
-  clearAll() {
-  }
-}</code></pre>
-			<p>应用场景</p>
+			<p>不同于简单的观察者模式，在此项目中很多对象即需要订阅事件，又需要发布事件。所以我剥离出了一个事件中心，让这个事件中心来转发事件。</p>
+			<p>每一个组件都可以去listen某个事件，也可以 trigger某个事件。项目中广泛的使用了这种方法，让类与类之间解耦，真的是非常好用！</p>
+			<p>应用场景：</p>
 			<ul>
-				<li>雷的爆炸<ul>
+				<li><p>雷的爆炸</p>
+					<ul>
 						<li>当一个雷被引爆时会通知所有雷爆炸。</li>
 					</ul>
 				</li>
-				<li>游戏胜利<ul>
-						<li>当所有的雷被找到后，提示用户游戏胜利并加入到排行榜中实例对象会收到通知</li>
+				<li><p>游戏胜利</p>
+					<ul>
+						<li>当所有的雷被找到后，提示用户游戏胜利的实例对象会收到通知</li>
 					</ul>
 				</li>
-				<li>积分器开始计时</li>
-				<li>旗子数量的增减</li>
-			</ul>
-			<p>使用方法
-			获取到事件中心实例后进行<code>trigger</code>和<code>listen</code></p>
-			<p>属性：</p>
-			<ul>
-				<li>状态<ul>
-						<li>flag</li>
-						<li>query</li>
-						<li>none</li>
-						<li>clicked</li>
+				<li><p>计时器开始计时</p>
+					<ul>
+						<li>当用户在雷区上点击后，计时器开始计时。</li>
 					</ul>
 				</li>
-				<li>对应的DOM</li>
-				<li>周围雷数量</li>
-				<li>是否是雷</li>
-				<li>位置<ul>
-						<li>x</li>
-						<li>y</li>
+				<li><p>旗子数量的增减</p>
+					<ul>
+						<li>当用户使用右键点击后，旗子数量减少</li>
+						<li>当不使用旗子时，旗子数量增加</li>
 					</ul>
 				</li>
 			</ul>
-			<p>方法：</p>
-			<ul>
-				<li>【点击时】处理点击，判断是否为雷，展示雷或者分数</li>
-				<li>（算周围雷数/点数）查看周围 8 个点是否有雷，计算分数</li>
-				<li>获取周围 8 个格子</li>
-				<li>（引爆雷）使用观察者模式 trigger 雷引爆，所有雷展示样样式；笑脸边哭脸；即时停止；禁止用户点击</li>
-				<li>如果点击时这个不是雷，而且周围雷数为 0，那么让周围点数为 0 的格子周围 9 个都展示出来</li>
-				<li>（如果状态为clicked）让周围 8 个格子样式变化，方便用户检查雷的存在</li>
-				<li>修改格子样式</li>
-			</ul>
-			<h3 id="-">地雷位置的二维数组</h3>
-			<p>记录雷的位置。（单例模式，每一个格子都可以去 get，但构建者的导演可以去 init）</p>
-			<h3 id="-">雷的引爆</h3>
-			<p>有一个 MineArray，如果一个被点了，那么就用观察者模式去通知所有的雷，让他们都爆了。 其中雷既是观察者，又是监听者。 他们都 listen(&#39;mineClick&#39;)事件，也都可以 trigger(&#39;minebomb&#39;)事件。而 listen 函数回将这些对象都添加到一个单例的雷数组中。</p>
-			<h2 id="-">设计模式</h2>
-			<ul>
-				<li>反射</li>
-				<li>state 模式（每个雷状态）</li>
-				<li>观察者模式（计分，其他雷爆炸，笑脸变化）</li>
-				<li>工厂模式-生成雷</li>
-				<li>建造者模式</li>
-			</ul>
+			<p>事件中心实现与使用方式：
+			事件中心代码位于： <a href="src/util/EventCenter.ts">src/util/EventCenter.ts</a></p>
+			<p>使用时获取到EventCenter实例，trigger 或 listen 都可以。</p>
+			<p><img src="pic/trigger.png" alt="">  <img src="pic/listen.png" alt=""> </p>
+			<h3 id="-">单例模式</h3>
+			<p>既然上文中提到了事件中心，那么事件中心肯定就只能有一个啊，不然不同的对象之间都没法互通消息了，而将事件中心中记录事件映射关系的map做成静态的其实也可以，但是如果每个地方要用事件了都去 new 一个事件中心是耗费内存的。</p>
+			<p>使用一个单例模式来让事件中心仅可被获取到一份是一个好的选择。</p>
+			<p>以下是JavaScript使用闭包生成单例的代码：</p>
+			<pre><code class="language-js"><span class="hljs-comment">// 返回单例</span>
+<span class="hljs-keyword">let</span> getSingleEventCenter = (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">let</span> eventCenter
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span> (!eventCenter) {
+      eventCenter = <span class="hljs-keyword">new</span> EventCenter()
+    }
+    <span class="hljs-keyword">return</span> eventCenter
+  }
+})()</code></pre>
 			<h3 id="-">建造者模式</h3>
-			<p>根据不同的难度，使用不同的导演类，生成不同的雷图。</p>
-			<ul>
-				<li>获得新的 计步器、倒计时、笑脸（这3个单例）</li>
-				<li>获得新的地雷位置二维数组（单例）</li>
-				<li>获得一个新的雷区，雷区里面又分为每一行，每一行里才是一个一个的格子</li>
-			</ul>
+			<p>建造者模式适用于：组成项目的组件基本不变，但项目复杂、各部分改如何组合到一起经常变换。</p>
+			<p>扫雷项目中雷区的行列数量经常变换。虽然这个只要配置一个参数就可以了，但是可以用建造者模式中导演类来决定雷区的行列数、雷的概率。并指导“扫雷”的页面应该如何将各组件组合到一起。</p>
+			<p>扫雷有<strong>简单、普通、困难</strong>3种模式，现在还不够复杂，所以我把3个build合成了一个了，只有导演类有还保留有3个。</p>
+			<p>目录结构：</p>
+			<pre><code>src
+├── Buider
+│   └── Build<span class="hljs-selector-class">.ts</span>
+├── director
+│   ├── Director<span class="hljs-selector-class">.ts</span>
+│   ├── DirectorEasy<span class="hljs-selector-class">.ts</span>
+│   ├── DirectorGeneral<span class="hljs-selector-class">.ts</span>
+│   ├── DirectorHard<span class="hljs-selector-class">.ts</span>
+│   └── IMineAreaConfig<span class="hljs-selector-class">.ts</span>
+├── ClassFactory
+│   ├── classMap<span class="hljs-selector-class">.ts</span>
+│   └── index<span class="hljs-selector-class">.ts</span>
+├── MineClear<span class="hljs-selector-class">.ts</span>
+├── components
+│   ├── Block<span class="hljs-selector-class">.ts</span>
+│   ├── DOM<span class="hljs-selector-class">.ts</span>
+│   ├── DifficultyPicker<span class="hljs-selector-class">.ts</span>
+│   ├── Face<span class="hljs-selector-class">.ts</span>
+│   ├── FlagCounter<span class="hljs-selector-class">.ts</span>
+│   ├── GameWin<span class="hljs-selector-class">.ts</span>
+│   ├── MineArea<span class="hljs-selector-class">.ts</span>
+│   ├── RackList<span class="hljs-selector-class">.ts</span>
+│   └── Timer<span class="hljs-selector-class">.ts</span>
+├── config<span class="hljs-selector-class">.ts</span>
+├── index<span class="hljs-selector-class">.ts</span>
+└── util
+    ├── EventCenter<span class="hljs-selector-class">.ts</span>
+    ├── StateMachine<span class="hljs-selector-class">.ts</span>
+    ├── getCurentTime<span class="hljs-selector-class">.ts</span>
+    ├── getNumberHTMLStr<span class="hljs-selector-class">.ts</span>
+    ├── log<span class="hljs-selector-class">.ts</span>
+    └── stopPropagation.js</code></pre><h3 id="-">状态模式</h3>
+			<p>扫雷中右键点击格子可以标记，标记一共有3个状态。</p>
+			<p><img src="img/blank.bmp" alt="">
+				<img src="img/flag.bmp" alt="">
+			<img src="img/ask.bmp" alt=""></p>
+			<p><img src="pic/states.png" alt=""></p>
+			<p>原来的代码就是一段连续的if - else来判断当前状态是什么。但让代码耦合性很强，读起来很难受。 所以我实现了一个工具函数 <a href="src/util/StateMachine.ts">StateMachine</a> 来管理状态的切换。</p>
+			<p>使用起来比较方便</p>
+			<pre><code class="language-js"><span class="hljs-comment">// 创建实例</span>
+<span class="hljs-keyword">this</span>.rightClickState = <span class="hljs-keyword">new</span> StateMachine(<span class="hljs-string">'blank'</span>, {
+  <span class="hljs-attr">blank</span>: {
+    <span class="hljs-attr">nextState</span>: <span class="hljs-string">'flag'</span>,
+    <span class="hljs-attr">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-keyword">this</span>.dom.innerHTML = <span class="hljs-string">``</span>
+    }
+  },
+  <span class="hljs-attr">flag</span>: {
+    <span class="hljs-attr">nextState</span>: <span class="hljs-string">'doubt'</span>,
+    <span class="hljs-attr">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-keyword">this</span>.dom.innerHTML = <span class="hljs-string">`&lt;img src="./img/flag.bmp" alt=""&gt;`</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isBomb) {
+        eventCenter.trigger(<span class="hljs-string">'correct_find'</span>)
+      }
+      eventCenter.trigger(<span class="hljs-string">'flag_use'</span>, <span class="hljs-keyword">this</span>.x, <span class="hljs-keyword">this</span>.y)
+    }
+  },
+  <span class="hljs-attr">doubt</span>: {
+    <span class="hljs-attr">nextState</span>: <span class="hljs-string">'blank'</span>,
+    <span class="hljs-attr">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-keyword">this</span>.dom.innerHTML = <span class="hljs-string">`&lt;img src="./img/ask.bmp" alt=""&gt;`</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isBomb) {
+        eventCenter.trigger(<span class="hljs-string">'error_find'</span>)
+      }
+      eventCenter.trigger(<span class="hljs-string">'flag_unuse'</span>)
+    }
+  }
+})</code></pre>
+			<pre><code class="language-js"><span class="hljs-comment">// 右键点击时切换状态， 只需要调用 next() 方法就好</span>
+<span class="hljs-keyword">this</span>.dom.oncontextmenu = <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> {
+  stopBubble(e)
+  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.hasClicked) {
+    <span class="hljs-keyword">this</span>.rightClickState.next()
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+}</code></pre>
+			<h3 id="-">反射</h3>
+			<p>在JS里第一次写反射，之前没见人这么在前端里写过，但用起来真香！</p>
+			<p>实现方式：
+			在<a href="src/ClassFactory/classMap.ts">classMap.ts</a> 中引入想反射的类，并且导出这个类到一个default对象中</p>
+			<pre><code class="language-js"><span class="hljs-keyword">import</span> DirectorEasy <span class="hljs-keyword">from</span> <span class="hljs-string">'../director/DirectorEasy'</span>
+<span class="hljs-keyword">import</span> DirectorGeneral <span class="hljs-keyword">from</span> <span class="hljs-string">'../director/DirectorGeneral'</span>
+<span class="hljs-keyword">import</span> DirectorHard <span class="hljs-keyword">from</span> <span class="hljs-string">'../director/DirectorHard'</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  DirectorEasy,
+  DirectorGeneral,
+  DirectorHard
+}</code></pre>
+			<p>在  <a href="src/ClassFactory/index.ts">ClassFactory/index.ts</a> 中获取上面的 classMap， 并导出一个创建类的工厂函数</p>
+			<pre><code class="language-js"><span class="hljs-keyword">import</span> classMap <span class="hljs-keyword">from</span> <span class="hljs-string">'./classMap'</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">classFactory</span>  (<span class="hljs-params">className: string</span>) </span>{
+  <span class="hljs-keyword">if</span> (className <span class="hljs-keyword">in</span> classMap) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> classMap[className]()
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">'no this class: '</span> + className)
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> classFactory</code></pre>
+			<p>用的时候就很方便了， 比如我在难度选择的地方是这样用的
+			<img src="pic/useReflect.png" alt=""></p>
+			<h2 id="-">项目中的一些待改进的地方</h2>
+			<h3 id="-">数据中心</h3>
+			<p>没有一个数据中心，我把一些少量的数据存在window对象上，这是不够好的。虽然可以用 ESModule模块化（本质上是闭包）来实现，但个人觉得数据中心得有个数据中心的样子。</p>
+			<h3 id="-">事件名应该为常量</h3>
+			<p>为了避免程序员编码时的错误，并且让所有的事件名有一个汇总，有一个事件中心是最好不过的。大概像下面这样</p>
+			<pre><code class="language-js"><span class="hljs-comment">// EventNames.ts</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> GAME_WIN = <span class="hljs-string">'game_win'</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> MINE_EXPLODE = <span class="hljs-string">'mine_explode'</span></code></pre>
+			<pre><code class="language-js"><span class="hljs-comment">// 使用者</span>
+
+<span class="hljs-keyword">import</span> { GAME_WIN, MINE_EXPLODE } <span class="hljs-keyword">from</span> <span class="hljs-string">'EventNames.ts'</span>
+
+eventCenter.tigger(GAME_WIN, <span class="hljs-string">'some args'</span>)
+eventCenter.listen(MINE_EXPLODE, ()=&gt; {
+  <span class="hljs-comment">// do someting</span>
+})</code></pre>
 		</div>
 		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
@@ -1148,6 +1252,7 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Functions</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-function"><a href="globals.html#classfactory" class="tsd-kind-icon">class<wbr>Factory</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#default" class="tsd-kind-icon">default</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#getcurenttime" class="tsd-kind-icon">get<wbr>Curent<wbr>Time</a></li>
 							<li class="tsd-kind-function"><a href="globals.html#getnumerhtmlstr" class="tsd-kind-icon">get<wbr>NumerHTMLStr</a></li>
@@ -1170,7 +1275,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">get<wbr>Single<wbr>Event<wbr>Center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> =&nbsp;(function() {let eventCenterreturn function() {if (!eventCenter) {eventCenter &#x3D; new EventCenter()}return eventCenter}})()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/EventCenter.ts#L56">util/EventCenter.ts:56</a></li>
+						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/util/EventCenter.ts#L56">util/EventCenter.ts:56</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1180,13 +1285,36 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">init<wbr>Difficulty<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Easy"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Easy&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/index.ts#L3">index.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/index.ts#L3">index.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Functions</h2>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="classfactory" class="tsd-anchor"></a>
+				<h3>class<wbr>Factory</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">class<wbr>Factory<span class="tsd-signature-symbol">(</span>className<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/ClassFactory/index.ts#L3">ClassFactory/index.ts:3</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>className: <span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function">
 				<a name="default" class="tsd-anchor"></a>
 				<h3>default</h3>
@@ -1197,7 +1325,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/log.ts#L1">util/log.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/util/log.ts#L1">util/log.ts:1</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1228,7 +1356,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/getCurentTime.ts#L1">util/getCurentTime.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/util/getCurentTime.ts#L1">util/getCurentTime.ts:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -1245,7 +1373,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/util/getNumberHTMLStr.ts#L1">util/getNumberHTMLStr.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/util/getNumberHTMLStr.ts#L1">util/getNumberHTMLStr.ts:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1267,7 +1395,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">face<wbr>Img<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/components/Face.ts#L5">components/Face.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/components/Face.ts#L5">components/Face.ts:5</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -1276,7 +1404,7 @@ img { max-width: 100%; }
 					<div class="tsd-signature tsd-kind-icon">cry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;&lt;img src&#x3D;&quot;./img/face_fail.bmp&quot; alt&#x3D;&quot;&quot;&gt;&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/components/Face.ts#L7">components/Face.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/components/Face.ts#L7">components/Face.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1286,7 +1414,7 @@ img { max-width: 100%; }
 					<div class="tsd-signature tsd-kind-icon">smile<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;&lt;img src&#x3D;&quot;./img/face_normal.bmp&quot; alt&#x3D;&quot;&quot;&gt;&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/7fd82e4/src/components/Face.ts#L6">components/Face.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/huyaocode/mineClearance/blob/e9a0412/src/components/Face.ts#L6">components/Face.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>

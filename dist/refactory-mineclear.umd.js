@@ -911,14 +911,14 @@
         DirectorHard: DirectoHard
     };
 
-    var classFactory = (function (className) {
+    function classFactory(className) {
         if (className in classMap) {
             return new classMap[className]();
         }
         else {
             throw TypeError('no this class: ' + className);
         }
-    });
+    }
 
     var initDifficulty = 'Easy';
     try {
